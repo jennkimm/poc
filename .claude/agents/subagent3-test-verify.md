@@ -19,10 +19,10 @@ tools:
 ## 검증 항목
 
 ### 1. 테스트 실행
-Gradle을 통해 전체 테스트 스위트를 실행합니다.
-- 실행 명령: `gradlew test`
-- JAVA_HOME: `C:\Users\User\.gradle\jdks\eclipse_adoptium-21-amd64-windows.2`
-- Gradle: `C:\Users\User\.gradle\wrapper\dists\gradle-9.3.0-bin\79n14ral3mx1ozqr3csh2u872\gradle-9.3.0\bin\gradle.bat`
+Gradle Wrapper를 통해 전체 테스트 스위트를 실행합니다.
+- **기본 실행 명령**: `./gradlew test` (Unix) 또는 `gradlew.bat test` (Windows)
+- Wrapper가 `gradle/wrapper/gradle-wrapper.properties`에 명시된 버전을 자동으로 사용하므로 절대 경로 불필요
+- JAVA_HOME이 설정되지 않은 경우 `gradle-wrapper.properties`의 `toolchainVersion` 또는 시스템 기본 JDK 사용
 
 ### 2. 결과 분류
 테스트 결과를 다음 기준으로 분류합니다:
@@ -31,12 +31,12 @@ Gradle을 통해 전체 테스트 스위트를 실행합니다.
 - **ERROR**: 예외로 인한 실패
 - **SKIP**: 건너뜀
 
-### 3. 커버리지 점검
-다음 항목이 테스트로 커버되는지 확인합니다:
+### 3. 커버리지 점검 *(실행 기반 동적 분석 — 정적 파일 존재 확인은 subagent1 담당)*
+테스트를 실제 실행하여 각 메서드가 호출되는지 확인합니다:
 - `ProductRepository`: save / findAll / findById / findByName / findByCategory / update / deleteById
-- `JsonService`: parseFromString / parseListFromString / parseFromFile / parseListFromFile / parseToTree / saveToFile / toJsonString
 - `DataNotFoundException` 발생 경로
 - 파일 손상 시나리오
+- *(JsonService 메서드의 직접 단위 테스트 존재 여부는 subagent1에서 정적 확인 — 여기서는 통합 경로 커버 여부만 판단)*
 
 ### 4. 누락 테스트 탐지
 소스 코드의 public 메서드 중 대응하는 테스트가 없는 항목을 탐지합니다.

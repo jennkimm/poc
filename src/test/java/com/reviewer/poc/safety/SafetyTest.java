@@ -312,7 +312,7 @@ class SafetyTest {
     // ══════════════════════════════════════════════════════════════════════
 
     @Test
-    @DisplayName("ST-F01: 파일이 빈 내용일 때 findAll — 빈 리스트 반환 (안전 처리)")
+    @DisplayName("ST-F01: 파일이 빈 내용일 때 findAll — dataFile.length()==0 체크로 빈 리스트 반환 (Jackson 파싱 우회)")
     void findAllOnEmptyFileReturnsEmptyList() throws IOException {
         Files.writeString(tempFile.toPath(), "", StandardCharsets.UTF_8);
         assertThat(repo.findAll()).isEmpty();

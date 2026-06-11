@@ -50,7 +50,9 @@ tools:
 
 **C2-02 입력 검증**
 - 외부 입력(사용자 입력, 파일 읽기)에 대한 검증 로직 존재 여부 확인
-- `null` 체크 누락 탐지 (현재 `findByName(null)` NPE 발생 — 알려진 미준수 항목)
+- `null` 체크 누락 탐지 및 **규칙 위반 심각도 판정**
+  *(코드 내 NPE 발생 구조 실재 여부 확인은 subagent1 담당 — 이 에이전트는 규정 위반으로서의 심각도와 수정 우선순위를 판정)*
+  - 현재 알려진 미준수 항목: `findByName(null)`, `findByCategory(null)` → 심각도 MEDIUM
 
 **C2-03 예외 처리**
 - 예외를 무시(`catch (Exception e) {}`)하는 패턴 탐지
