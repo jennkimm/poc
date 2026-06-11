@@ -1,0 +1,14 @@
+# Build outputs
+build/
+out/
+.gradle/
+
+# IDE
+.idea/
+*.iml
+
+# Maven
+target/
+
+# Output data (runtime generated)
+output/
