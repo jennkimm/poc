@@ -36,7 +36,7 @@ public class ProductRepository {
 
     // ── Read: 전체 목록 ──────────────────────────────────────────────────
     public List<Product> findAll() throws IOException {
-        if (!dataFile.exists()) {
+        if (!dataFile.exists() || dataFile.length() == 0) {
             return new ArrayList<>();
         }
         return jsonService.parseListFromFile(dataFile, new TypeReference<>() {});

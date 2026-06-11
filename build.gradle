@@ -18,6 +18,20 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.1'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.3'
+    testImplementation 'org.assertj:assertj-core:3.25.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+    jvmArgs '-Dfile.encoding=UTF-8'
+    testLogging {
+        events 'passed', 'failed', 'skipped'
+        showStandardStreams = false
+        exceptionFormat = 'full'
+    }
 }
 
 application {
