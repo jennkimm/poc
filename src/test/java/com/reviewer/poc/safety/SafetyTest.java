@@ -199,26 +199,23 @@ class SafetyTest {
     }
 
     @Test
-    @DisplayName("ST-R04: 빈 문자열 키워드 이름 검색 — 전체 반환 (contains 빈 문자열은 항상 true)")
-    void findByNameEmptyStringReturnsAll() throws IOException {
+    @DisplayName("ST-R04: 빈 문자열 키워드 이름 검색 — 빈 리스트 반환 (blank 가드 처리)")
+    void findByNameEmptyStringReturnsEmpty() throws IOException {
         repo.save(makeProduct("A", 1000, "cat"));
         repo.save(makeProduct("B", 2000, "cat"));
-        assertThat(repo.findByName("")).hasSize(2);
+        assertThat(repo.findByName("")).isEmpty();
     }
 
     @Test
-    @DisplayName("ST-R05: null 키워드 이름 검색 — NullPointerException 발생 확인 (현재 미처리)")
-    void findByNameNullThrowsNpe() {
-        // 현재 구현에서 null.toLowerCase()는 NPE → 알려진 취약점 문서화
-        assertThatThrownBy(() -> repo.findByName(null))
-                .isInstanceOf(NullPointerException.class);
+    @DisplayName("ST-R05: null 키워드 이름 검색 — 빈 리스트 반환 (null 가드 처리)")
+    void findByNameNullReturnsEmpty() throws IOException {
+        assertThat(repo.findByName(null)).isEmpty();
     }
 
     @Test
-    @DisplayName("ST-R06: null 카테고리 검색 — NullPointerException 발생 확인")
-    void findByCategoryNullThrowsNpe() {
-        assertThatThrownBy(() -> repo.findByCategory(null))
-                .isInstanceOf(NullPointerException.class);
+    @DisplayName("ST-R06: null 카테고리 검색 — 빈 리스트 반환 (null 가드 처리)")
+    void findByCategoryNullReturnsEmpty() throws IOException {
+        assertThat(repo.findByCategory(null)).isEmpty();
     }
 
     @Test

@@ -51,6 +51,9 @@ public class ProductRepository {
 
     // ── Read: 이름 키워드 검색 ───────────────────────────────────────────
     public List<Product> findByName(String keyword) throws IOException {
+        if (keyword == null || keyword.isBlank()) {
+            return new ArrayList<>();
+        }
         String lower = keyword.toLowerCase();
         return findAll().stream()
                 .filter(p -> p.getName().toLowerCase().contains(lower))
@@ -59,6 +62,9 @@ public class ProductRepository {
 
     // ── Read: 카테고리 검색 ──────────────────────────────────────────────
     public List<Product> findByCategory(String category) throws IOException {
+        if (category == null || category.isBlank()) {
+            return new ArrayList<>();
+        }
         String lower = category.toLowerCase();
         return findAll().stream()
                 .filter(p -> p.getCategory().toLowerCase().contains(lower))

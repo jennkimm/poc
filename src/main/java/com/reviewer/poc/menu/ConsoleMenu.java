@@ -55,10 +55,7 @@ public class ConsoleMenu {
 
             String tagsInput = readLine("태그 (쉼표 구분, 없으면 Enter)");
             if (!tagsInput.isBlank()) {
-                p.setTags(Arrays.stream(tagsInput.split(","))
-                        .map(String::trim)
-                        .filter(s -> !s.isEmpty())
-                        .toList());
+                p.setTags(parseTags(tagsInput));
             }
 
             Product saved = repository.save(p);
@@ -136,10 +133,7 @@ public class ConsoleMenu {
             if (tagsInput.isBlank()) {
                 updated.setTags(existing.getTags());
             } else {
-                updated.setTags(Arrays.stream(tagsInput.split(","))
-                        .map(String::trim)
-                        .filter(s -> !s.isEmpty())
-                        .toList());
+                updated.setTags(parseTags(tagsInput));
             }
 
             repository.update(id, updated);
@@ -254,7 +248,12 @@ public class ConsoleMenu {
         while (true) {
             String input = readLine(prompt);
             try {
-                return Double.parseDouble(input);
+                double value = Double.parseDouble(input);
+                if (value < 0) {
+                    printLine("[오류] 가격은 0 이상이어야 합니다.");
+                    continue;
+                }
+                return value;
             } catch (NumberFormatException e) {
                 printLine("[오류] 숫자를 입력해주세요.");
             }
@@ -264,5 +263,12 @@ public class ConsoleMenu {
     private boolean readBoolean(String prompt) {
         String input = readLine(prompt);
         return input.equalsIgnoreCase("y");
+    }
+
+    private List<String> parseTags(String input) {
+        return Arrays.stream(input.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 }
