@@ -12,3 +12,4 @@ target/
 
 # Output data (runtime generated)
 output/
+data/
